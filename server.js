@@ -8,7 +8,14 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
 app.use(express.json());
 
 const uploadsDir = path.join(__dirname, "uploads");
@@ -92,19 +99,15 @@ app.get("/profile", (req, res) => {
 // Guardar perfil
 app.post("/profile", upload.single("avatar"), (req, res) => {
   const { name, bio, instagram, linkedin, email } = req.body;
-  const profilePath = path.join(__dirname, "uploads", "profile.json");
 
-  // Cargar perfil anterior (si existe)
   let previousProfile = {};
   if (fs.existsSync(profilePath)) {
     previousProfile = JSON.parse(fs.readFileSync(profilePath, "utf-8"));
   }
 
-  // Base del nuevo perfil
   const newAvatar = req.file?.filename || previousProfile.avatar || null;
   const avatarHistory = previousProfile.avatar_history || [];
 
-  // Si hay nuevo avatar, lo agregamos al historial
   if (req.file?.filename && !avatarHistory.includes(req.file.filename)) {
     avatarHistory.push(req.file.filename);
   }
@@ -121,20 +124,7 @@ app.post("/profile", upload.single("avatar"), (req, res) => {
   res.json({ success: true });
 });
 
-// Ruta base de prueba
-app.get("/profile", (req, res) => {
-  const profilePath = path.join(__dirname, "uploads", "profile.json");
-  if (!fs.existsSync(profilePath)) {
-    return res.json({});
-  }
-  const profile = JSON.parse(fs.readFileSync(profilePath, "utf-8"));
-  res.json(profile);
-});
-
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
-
+// Ruta para enviar mensajes desde formulario de contacto
 const nodemailer = require("nodemailer");
 
 app.post("/contact", async (req, res) => {
@@ -148,10 +138,10 @@ app.post("/contact", async (req, res) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      service: "gmail", // o tu proveedor (ej: 'hotmail', 'yahoo', etc.)
+      service: "gmail",
       auth: {
-        user: process.env.MAIL_USER, // tu correo
-        pass: process.env.MAIL_PASS, // tu contraseña o app password
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
       },
     });
 
@@ -167,4 +157,9 @@ app.post("/contact", async (req, res) => {
     console.error("Error enviando correo:", err);
     res.status(500).json({ success: false, message: "Error enviando correo" });
   }
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
