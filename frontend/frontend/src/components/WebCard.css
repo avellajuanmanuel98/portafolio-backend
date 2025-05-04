@@ -1,0 +1,66 @@
+.webcard-container {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.webcard-container:hover {
+  transform: scale(1.03);
+}
+
+.webcard-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tags de tecnologías */
+.webcard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 10px 0 0;
+  padding: 0 10px;
+}
+
+.webcard-tag {
+  background-color: #e0e0e0;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: #333;
+}
+
+/* Botón */
+.web-button {
+  margin: 12px auto 16px auto;
+  padding: 10px 20px;
+  background-color: #545454;
+  color: white;
+  border-radius: 20%;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.web-button:hover {
+  background-color: #2d2d2d;
+  color: #fff;
+  transform: scale(1.05);
+}
