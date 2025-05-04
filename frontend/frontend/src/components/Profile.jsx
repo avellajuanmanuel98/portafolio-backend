@@ -19,7 +19,7 @@ function Profile() {
         <div className="profile-card">
           {profile.avatar && (
             <img
-              src={`http://localhost:3000/uploads/${profile.avatar}`}
+              src={`${API_BASE_URL}/uploads/${profile.avatar}`}
               alt="Avatar"
               className="profile-avatar"
             />

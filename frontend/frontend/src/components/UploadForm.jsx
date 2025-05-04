@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../config";
 
 function UploadForm() {
   const [file, setFile] = useState(null);
@@ -24,7 +25,7 @@ function UploadForm() {
     formData.append("link", link);
 
     try {
-      const response = await fetch("http://localhost:3000/upload", {
+      const response = await fetch(`${API_BASE_URL}/upload`, {
         method: "POST",
         body: formData,
       });

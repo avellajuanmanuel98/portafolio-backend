@@ -78,8 +78,10 @@ function GroupedGallery() {
   const isImage = (ext) => ["jpg", "jpeg", "png", "gif", "webp"].includes(ext);
   const isVideo = (ext) => ["mp4", "webm", "mov"].includes(ext);
 
-  const renderMedia = (fileUrl, fileName) => {
+  const renderMedia = (fileName) => {
     const ext = fileName.split(".").pop().toLowerCase();
+    const fileUrl = `${API_BASE_URL}/uploads/${fileName}`;
+
     if (isImage(ext)) {
       return (
         <img
@@ -119,21 +121,18 @@ function GroupedGallery() {
               <div key={idx2}>
                 <h3>{project}</h3>
                 <div className="horizontal-scroll">
-                  {items.map((file, idx3) => {
-                    const url = `${API_BASE_URL}/uploads/${file.name}`;
-                      return (
-                      <div key={idx3} className="gallery-card">
-                        {renderMedia(url, file.name)}
-                        <div className="tags">
-                          {file.tags.map((tag, i) => (
-                            <span key={i} className="tag">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+                  {items.map((file, idx3) => (
+                    <div key={idx3} className="gallery-card">
+                      {renderMedia(file.name)}
+                      <div className="tags">
+                        {file.tags.map((tag, i) => (
+                          <span key={i} className="tag">
+                            {tag}
+                          </span>
+                        ))}
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}

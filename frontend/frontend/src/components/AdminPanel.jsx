@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../config";
 
 function AdminPanel() {
   const [file, setFile] = useState(null);
@@ -17,14 +18,14 @@ function AdminPanel() {
 
   const fetchFiles = () => {
     Promise.all([
-      fetch("http://localhost:3000/media").then((res) => res.json()),
-      fetch("http://localhost:3000/profile")
+      fetch(`${API_BASE_URL}/media`).then((res) => res.json()),
+      fetch(`${API_BASE_URL}/profile`)
         .then((res) => res.json())
         .catch(() => ({})),
     ])
       .then(([mediaData, profile]) => {
         const avatar = profile?.avatar;
-        const filtered = mediaData.files.filter((file) => file !== avatar); // 👈 excluye avatar
+        const filtered = mediaData.files.filter((file) => file !== avatar);
         setFiles(filtered);
       })
       .catch((err) => console.error("Error cargando archivos:", err));
@@ -43,7 +44,7 @@ function AdminPanel() {
     formData.append("tags", tags);
 
     try {
-      const response = await fetch("http://localhost:3000/upload", {
+      const response = await fetch(`${API_BASE_URL}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -63,7 +64,7 @@ function AdminPanel() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/delete/${encodeURIComponent(filename)}`,
+        `${API_BASE_URL}/delete/${encodeURIComponent(filename)}`,
         {
           method: "DELETE",
         }
@@ -116,7 +117,6 @@ function AdminPanel() {
     >
       <h2>🛠️ Panel de Administración</h2>
 
-      {/* Subida de archivos normales */}
       <form onSubmit={handleUpload}>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <br />
@@ -159,7 +159,6 @@ function AdminPanel() {
         ))}
       </ul>
 
-      {/* Actualización del perfil */}
       <hr style={{ margin: "40px 0" }} />
       <h3>Actualizar perfil público:</h3>
       <form
@@ -168,7 +167,7 @@ function AdminPanel() {
           const form = e.target;
           const formData = new FormData(form);
 
-          const res = await fetch("http://localhost:3000/profile", {
+          const res = await fetch(`${API_BASE_URL}/profile`, {
             method: "POST",
             body: formData,
           });

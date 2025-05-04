@@ -63,8 +63,8 @@ function WebProjects() {
             <Slider {...carouselSettings}>
               {images.map((file, i) => {
                 const tags = metadata[file]?.tags || [];
-                const link = metadata[file]?.link || "";
                 const imageUrl = `${API_BASE_URL}/uploads/${file}`;
+                const link = metadata[file]?.link || "";
                 const technologies = tags.slice(2);
                 return (
                   <WebCard
@@ -81,8 +81,8 @@ function WebProjects() {
             <div className="web-carousel">
               {images.map((file, i) => {
                 const tags = metadata[file]?.tags || [];
-                const link = metadata[file]?.link || "";
                 const imageUrl = `${API_BASE_URL}/uploads/${file}`;
+                const link = metadata[file]?.link || "";
                 const technologies = tags.slice(2);
                 return (
                   <WebCard
