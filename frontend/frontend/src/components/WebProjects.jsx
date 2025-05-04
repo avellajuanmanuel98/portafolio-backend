@@ -4,6 +4,7 @@ import "./WebProjects.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import WebCard from "./WebCard";
+import { API_BASE_URL } from "../config";
 
 function WebProjects() {
   const [files, setFiles] = useState([]);
@@ -19,10 +20,8 @@ function WebProjects() {
 
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:3000/media").then((res) => res.json()),
-      fetch("http://localhost:3000/uploads/metadata.json").then((res) =>
-        res.json()
-      ),
+      fetch(`${API_BASE_URL}/media`).then((res) => res.json()),
+      fetch(`${API_BASE_URL}/uploads/metadata.json`).then((res) => res.json()),
     ])
       .then(([mediaData, meta]) => {
         const webFiles = mediaData.files.filter((file) =>
@@ -65,7 +64,7 @@ function WebProjects() {
               {images.map((file, i) => {
                 const tags = metadata[file]?.tags || [];
                 const link = metadata[file]?.link || "";
-                const imageUrl = `http://localhost:3000/uploads/${file}`;
+                const imageUrl = `${API_BASE_URL}/uploads/${file}`;
                 const technologies = tags.slice(2);
                 return (
                   <WebCard
@@ -83,7 +82,7 @@ function WebProjects() {
               {images.map((file, i) => {
                 const tags = metadata[file]?.tags || [];
                 const link = metadata[file]?.link || "";
-                const imageUrl = `http://localhost:3000/uploads/${file}`;
+                const imageUrl = `${API_BASE_URL}/uploads/${file}`;
                 const technologies = tags.slice(2);
                 return (
                   <WebCard

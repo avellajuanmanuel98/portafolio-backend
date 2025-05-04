@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import "./Profile.css";
+import { API_BASE_URL } from "../config";
 
 function Profile() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/profile")
+    fetch(`${API_BASE_URL}/profile`)
       .then((res) => res.json())
       .then((data) => setProfile(data));
   }, []);

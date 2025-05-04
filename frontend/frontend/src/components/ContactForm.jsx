@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./ContactForm.css";
+import { API_BASE_URL } from "../config";
 
 function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -13,7 +14,7 @@ function ContactForm() {
     e.preventDefault();
     setStatus("enviando");
 
-    const res = await fetch("http://localhost:3000/contact", {
+    const res = await fetch(`${API_BASE_URL}/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

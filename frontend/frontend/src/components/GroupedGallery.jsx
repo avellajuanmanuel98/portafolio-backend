@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Gallery.css";
+import { API_BASE_URL } from "../config";
 
 function GroupedGallery() {
   const [files, setFiles] = useState([]);
@@ -9,11 +10,11 @@ function GroupedGallery() {
 
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:3000/media").then((res) => res.json()),
-      fetch("http://localhost:3000/uploads/metadata.json")
+      fetch(`${API_BASE_URL}/media`).then((res) => res.json()),
+      fetch(`${API_BASE_URL}/uploads/metadata.json`)
         .then((res) => res.json())
         .catch(() => ({})),
-      fetch("http://localhost:3000/profile")
+      fetch(`${API_BASE_URL}/profile`)
         .then((res) => res.json())
         .catch(() => ({})),
     ])
@@ -119,8 +120,8 @@ function GroupedGallery() {
                 <h3>{project}</h3>
                 <div className="horizontal-scroll">
                   {items.map((file, idx3) => {
-                    const url = `http://localhost:3000/uploads/${file.name}`;
-                    return (
+                    const url = `${API_BASE_URL}/uploads/${file.name}`;
+                      return (
                       <div key={idx3} className="gallery-card">
                         {renderMedia(url, file.name)}
                         <div className="tags">
