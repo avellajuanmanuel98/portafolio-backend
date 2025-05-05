@@ -8,11 +8,16 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  "http://localhost:5173", // para desarrollo local
+  "https://frontend-one-kohl-86.vercel.app/", // 👈 reemplaza con tu dominio exacto de Vercel
+];
+
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "DELETE"],
-    allowedHeaders: ["Content-Type"],
+    credentials: true,
   })
 );
 
